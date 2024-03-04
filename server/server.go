@@ -9,8 +9,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"command-queue/internal/util/orderedmap"
-	"command-queue/internal/util/queue"
+	"command-queue/internal/utils/orderedmap"
+	"command-queue/internal/utils/queue"
 )
 
 // Server implements the Server interface.
@@ -70,20 +70,20 @@ func (s *Server) Stop() error {
 }
 
 func (s *Server) processCommand(message string) {
-	command, err := command.ParseCommand(message)
+	cmd, err := command.ParseCommand(message)
 	if err != nil {
 		log.Printf("Error parsing command: %v\n", err)
 		return
 	}
-	switch command.Type() {
+	switch cmd.Type() {
 	case command.Add:
-		s.orderedMap.Set(command.Key(), command.Value())
+		s.orderedMap.Set(cmd.Key(), cmd.Value())
 	case command.Delete:
-		s.orderedMap.DeleteItem(command.Key())
+		s.orderedMap.DeleteItem(cmd.Key())
 	case command.Get:
-		val, ok := s.orderedMap.Get(command.Key())
+		val, ok := s.orderedMap.Get(cmd.Key())
 		if ok {
-			s.writeToFile(command.Key(), fmt.Sprintf("%s : %s\n", command.Key(), val))
+			s.writeToFile(cmd.Key(), fmt.Sprintf("%s : %s\n", cmd.Key(), val))
 		}
 	case command.GetAll:
 		keys, values := s.orderedMap.GetAll()

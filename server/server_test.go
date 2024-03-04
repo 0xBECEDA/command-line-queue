@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	"command-queue/internal/util/queue"
+	"command-queue/internal/utils/queue"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -21,7 +21,7 @@ func TestServerStart(t *testing.T) {
 
 	s := NewServer(memQ, 1)
 
-	inputCommands := []string{"add('key1,'value1')", "delete('key2')", "get_all()"}
+	inputCommands := []string{"addItem('key1,'value1')", "deleteItem('key2')", "getAllItems()"}
 
 	// create a buffer with input commands
 	inputBuffer := bytes.NewBufferString("")
@@ -48,11 +48,16 @@ func TestServerStart(t *testing.T) {
 }
 
 func TestProcessCommand(t *testing.T) {
+	const (
+		allItemsFileName = "all_items_2"
+		keyFileName      = "key2_1"
+	)
+
 	server := NewServer(nil, 1)
 
 	// delete test files if they exist
-	os.Remove("key2_1")
-	os.Remove("allItems_2")
+	os.Remove(keyFileName)
+	os.Remove(allItemsFileName)
 
 	tests := []struct {
 		name    string
@@ -74,13 +79,13 @@ func TestProcessCommand(t *testing.T) {
 	assert.Equal(t, []string{"key2"}, keys)
 	assert.Equal(t, []interface{}{"value2"}, values)
 
-	bt, err := os.ReadFile("key2_1")
+	bt, err := os.ReadFile(keyFileName)
 	assert.Nilf(t, err, "Error reading file: %v", err)
 	assert.Equal(t, "key2 : value2\n", string(bt))
-	os.Remove("key2_1")
+	os.Remove(keyFileName)
 
-	bt, err = os.ReadFile("allItems_2")
+	bt, err = os.ReadFile(allItemsFileName)
 	assert.Nilf(t, err, "Error reading file: %v", err)
 	assert.Equal(t, "key2 : value2\n", string(bt))
-	os.Remove("allItems_2")
+	os.Remove(allItemsFileName)
 }

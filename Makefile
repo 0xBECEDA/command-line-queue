@@ -1,10 +1,5 @@
-clean-testcache:
-	go clean -testcache
-
-test-cover:   ## tests with coverage
-	mkdir -p coverage
-	go test $(GO_TAGS) -coverpkg=./... -coverprofile=coverage/coverage.out -covermode=atomic ./...
-	go tool cover -html=coverage/coverage.out -o coverage/coverage.html
+test:
+	go test -v -race ./...
 
 install-gofumpt:
 	go install mvdan.cc/gofumpt@latest

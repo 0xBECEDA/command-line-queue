@@ -10,7 +10,7 @@ import (
 
 	"command-queue/server"
 
-	"command-queue/internal/util/queue"
+	"command-queue/internal/utils/queue"
 )
 
 // Queue buffer length

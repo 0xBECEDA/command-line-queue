@@ -7,12 +7,12 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"command-queue/internal/util/queue"
+	"command-queue/internal/utils/queue"
 )
 
 func TestClientStart(t *testing.T) {
 	memQ := queue.NewMemQueue(10)
-	inputCommands := []string{"add('key1,'value1')", "delete('key2')", "get_all()"}
+	inputCommands := []string{"addItem('key1,'value1')", "deleteItem('key2')", "getAllItems()"}
 
 	inputBuffer := bytes.NewBufferString("")
 	for _, cmd := range inputCommands {

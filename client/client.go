@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	"command-queue/internal/util/queue"
+	"command-queue/internal/utils/queue"
 )
 
 type Client struct {

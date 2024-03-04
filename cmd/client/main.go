@@ -9,7 +9,7 @@ import (
 	"syscall"
 
 	"command-queue/client"
-	"command-queue/internal/util/queue"
+	"command-queue/internal/utils/queue"
 )
 
 const (
